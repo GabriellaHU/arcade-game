@@ -1,3 +1,7 @@
+// ------------------------------------------------------------
+// ----------------------- WINNING THE GAME--------------------
+// ------------------------------------------------------------
+
 function winGame() {
   // allEnemies.forEach(function(enemy) {
   //   enemy.stop();
@@ -11,8 +15,10 @@ function resetPlayer() {
 };
 
 
+// ------------------------------------------------------------
+// ----------------------- ENEMY CLASS ------------------------
+// ------------------------------------------------------------
 
-// Enemies our player must avoid
 class Enemy {
 
   constructor(x, y, speed) {
@@ -64,7 +70,10 @@ class Enemy {
 
 }
 
-// Player class
+// ------------------------------------------------------------
+// ----------------------- PLAYER CLASS -----------------------
+// ------------------------------------------------------------
+
 class Player {
 
     constructor(x = 101*2, y = 400) {
@@ -121,10 +130,14 @@ class Player {
 
 }
 
+// ------------------------------------------------------------
+// ---------------------- KEYBOARD INPUT ----------------------
+// ------------------------------------------------------------
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
@@ -133,6 +146,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// ------------------------------------------------------------
+// ----------------------- INIT OBJECTS -----------------------
+// ------------------------------------------------------------
 
 //array that initializes enemies on the canvas
 let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101*3, 400 - 83 * 3), new Enemy(-101*2, 400 - 83 * 2)]
