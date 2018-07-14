@@ -2,18 +2,34 @@
 // ----------------------- WINNING THE GAME--------------------
 // ------------------------------------------------------------
 
+//TODO remove variable from global scope
+let scoreNum = 0;
+
 function winGame() {
   // allEnemies.forEach(function(enemy) {
   //   enemy.stop();
   // });
-  console.log('you won')
-  const reset = window.setTimeout(resetPlayer, 200);
+  console.log('You won.');
+
+  //reset player to startpoint
+  // TODO set delay => block player movement and collisions
+  const reset = window.setTimeout(resetPlayer, 0);
+
+  function resetPlayer() {
+    player.reset();
+  };
+
+  //IIFE to overwrite scores
+  scoreNum = function increaseScore() {
+    scoreNum++;
+    return scoreNum;
+    // scoreCounter.textContent = moveNum;
+  }(scoreNum);
+  console.log(scoreNum);
+
+  // const scoreCounter = document.querySelector('.scorecounter');
 
 }
-function resetPlayer() {
-  player.reset();
-};
-
 
 // ------------------------------------------------------------
 // ----------------------- ENEMY CLASS ------------------------
@@ -59,9 +75,9 @@ class Enemy {
          }
    }
 
-   stop() {
-     this.speed = 0
-   }
+   // stop() {
+   //   this.speed = 0
+   // }
 
    // Draw the enemy on the screen, required method for game
    render() {
@@ -88,7 +104,7 @@ class Player {
         //check collision (player x and y matches enemy coordinates)
         allEnemies.forEach(function(enemy){
           if (player.y === enemy.y && player.x > enemy.x-20 && player.x < enemy.x+70) {
-            console.log('You lost');
+            console.log('You lost.');
             player.reset();
           }
         });
