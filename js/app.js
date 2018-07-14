@@ -1,11 +1,44 @@
 // ------------------------------------------------------------
+// --------------------------- MODAL --------------------------
+// ------------------------------------------------------------
+
+// <dialog> is experimental!
+//IIFE that displays a modal when starting the game
+
+const displayModal = function() {
+  const avatarModal = document.createElement('dialog');
+  const startBtn = document.createElement('button');
+  const modalText = document.createElement('p');
+  // const avatars = ['char-boy', 'char-cat-girl','char-horn-girl', 'char-pink-girl', 'char-princess-girl'];
+  //
+  // let avatar = new Avatar();
+
+  document.body.appendChild(avatarModal);
+  avatarModal.appendChild(modalText);
+  // avatarModal.appendChild(currentAvatar);
+  avatarModal.appendChild(startBtn);
+
+
+  modalText.textContent = 'Arcade Game';
+  startBtn.textContent = 'Start Game';
+  avatarModal.showModal();
+
+
+  startBtn.addEventListener('click', function() {
+    avatarModal.close();
+    // enemies start moving
+    allEnemies.forEach(function(enemy) {
+      enemy.setSpeed();
+      });
+  });
+
+}();
+
+// ------------------------------------------------------------
 // ----------------------- WINNING THE GAME--------------------
 // ------------------------------------------------------------
 
 function winGame() {
-  // allEnemies.forEach(function(enemy) {
-  //   enemy.stop();
-  // });
 
   //reset player to startpoint
   // TODO set delay => block player movement and collisions
@@ -82,9 +115,9 @@ class Enemy {
          }
    }
 
-   // stop() {
-   //   this.speed = 0
-   // }
+  stop() {
+     this.speed = 0
+  }
 
    // Draw the enemy on the screen, required method for game
    render() {
@@ -97,12 +130,33 @@ class Enemy {
 // ----------------------- PLAYER CLASS -----------------------
 // ------------------------------------------------------------
 
+const avatarImg = Resources.load([
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
+]);
+const avatars = ['char-boy', 'char-cat-girl','char-horn-girl', 'char-pink-girl', 'char-princess-girl'];
+
+let randomNum = getRandomIntInclusive(0, 4);
+
+//funtion that generates a random value
+function getRandomIntInclusive(min, max) {
+min = Math.ceil(min);
+max = Math.floor(max);
+return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+
 class Player {
 
     constructor(x = 101*2, y = 400) {
       this.x = x;
       this.y = y;
-      this.sprite = 'images/char-boy.png';
+      this.sprite = `images/${avatars[randomNum]}.png`;
+      // this.sprite = `images/char-cat-girl.png`;
+
     }
 
     //Methods
@@ -152,6 +206,34 @@ class Player {
 
 }
 
+// class Avatar {
+//
+//     constructor(selection = 0, x = 0, y = 0) {
+//       this.x = x;
+//       this.y = y;
+//       this.sprite = 'images/char-boy.png';
+//       this.selection = selection;
+//     }
+//
+//     //Methods
+//     handleInput(keyCode) {
+//       //update player coordinates based on keyboard input
+//       if (keyCode === 'up'){
+//         this.selection ++;
+//       }
+//       if (keyCode === 'right'){
+//         this.selection ++;
+//       }
+//       if (keyCode === 'down'){
+//         this.selection --;
+//       }
+//       if (keyCode === 'left'){
+//         this.selection --;
+//       }
+//
+// };
+
+
 // ------------------------------------------------------------
 // ---------------------- KEYBOARD INPUT ----------------------
 // ------------------------------------------------------------
@@ -166,7 +248,15 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
+    // handle input if the game has begun
+    if (document.querySelector('dialog').hasAttribute('open') === false) {
     player.handleInput(allowedKeys[e.keyCode]);
+  };
+
+  // else {
+  //   avatar.handleInput(allowedKeys[e.keyCode]);
+  // };
+
 });
 
 // ------------------------------------------------------------
@@ -176,4 +266,13 @@ document.addEventListener('keyup', function(e) {
 //array that initializes enemies on the canvas
 let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101*3, 400 - 83 * 3), new Enemy(-101*2, 400 - 83 * 2)]
 // new player object
-let player = new Player()
+let player = new Player();
+
+// let avatar = new Avatar();
+
+
+
+// enemies don't move until the game is begun
+allEnemies.forEach(function(enemy) {
+  enemy.stop();
+  });
