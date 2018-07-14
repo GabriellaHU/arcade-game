@@ -1,10 +1,9 @@
 // Enemies our player must avoid
-const Enemy = function() {
+const Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    //pos-x
-    //pos-y
+    this.x = x;
+    this.y = y;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -20,8 +19,13 @@ Enemy.prototype.update = function(dt) {
 
     // check enemy position
        //if enemy didn't pass border
-         // move forward
-         // increment x by speed * dt
+         // move forward (increment x by speed * dt)
+         if (this.x < 606) {
+           this.x = this.x + 70 * dt;
+         } else {
+           this.x = -101;
+         }
+
 
        //else reset position to start
 
@@ -100,5 +104,5 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-let allEnemies = [new Enemy(0, 400 - 83 * 4), new Enemy(0, 400 - 83 * 3), new Enemy(0, 400 - 83 * 2)]
+let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101, 400 - 83 * 3), new Enemy(-101, 400 - 83 * 2)]
 let player = new Player()
