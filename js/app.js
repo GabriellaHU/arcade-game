@@ -2,14 +2,10 @@
 // ----------------------- WINNING THE GAME--------------------
 // ------------------------------------------------------------
 
-//TODO remove variable from global scope
-let scoreNum = 0;
-
 function winGame() {
   // allEnemies.forEach(function(enemy) {
   //   enemy.stop();
   // });
-  console.log('You won.');
 
   //reset player to startpoint
   // TODO set delay => block player movement and collisions
@@ -19,17 +15,28 @@ function winGame() {
     player.reset();
   };
 
-  //IIFE to overwrite scores
-  scoreNum = function increaseScore() {
-    scoreNum++;
-    return scoreNum;
-    // scoreCounter.textContent = moveNum;
-  }(scoreNum);
-  console.log(scoreNum);
-
-  // const scoreCounter = document.querySelector('.scorecounter');
+  // increase score counter
+  scoreNum++;
+  const scoreCounter = document.querySelector('.counter');
+  scoreCounter.textContent = `Your score is: ${scoreNum}`;
 
 }
+
+// ------------------------------------------------------------
+// ----------------------- SCORE COUNTER ----------------------
+// ------------------------------------------------------------
+
+//TODO remove variable from global scope
+let scoreNum = 0;
+
+//IIFE that sets up the score counter
+const initCounter = function() {
+  const scoreCounter = document.createElement('p');
+  document.body.appendChild(scoreCounter);
+  scoreCounter.textContent = "Your score is: 0";
+  scoreCounter.classList.add('counter');
+}();
+
 
 // ------------------------------------------------------------
 // ----------------------- ENEMY CLASS ------------------------
@@ -104,7 +111,6 @@ class Player {
         //check collision (player x and y matches enemy coordinates)
         allEnemies.forEach(function(enemy){
           if (player.y === enemy.y && player.x > enemy.x-20 && player.x < enemy.x+70) {
-            console.log('You lost.');
             player.reset();
           }
         });
