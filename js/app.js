@@ -37,26 +37,39 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 class Player {
 
-    //Constructor
-
-    //Properties
-      // x position
-      // y position
-      // sprite
+    constructor(x = 101*2, y = 83*5, sprite) {
+      this.x = x;
+      this.y = y;
+      this.sprite = 'images/char-boy.png';
+    }
 
     //Methods
     update() {
       //update position
+      // console.log(this.x, this.y);
         //check collision (player x and y matches enemy coordinates)
         //check win condition (player y matches the right y coordinates )
     }
 
     handleInput(keyCode) {
       //update player coordinates based on keyboard input
+      if (keyCode === 'up'){
+        this.y = this.y - 83;
+      }
+      if (keyCode === 'right'){
+        this.x = this.x + 101;
+      }
+      if (keyCode === 'down'){
+        this.y = this.y + 83;
+      }
+      if (keyCode === 'left'){
+        this.x = this.x - 101;
+      }
     }
 
     render() {
       //draw player on current x and y coordinates
+      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     //Reset player
