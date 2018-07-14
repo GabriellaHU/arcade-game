@@ -1,17 +1,16 @@
 function winGame() {
-  allEnemies.forEach(function(enemy) {
-    enemy.stop();
-  });
+  // allEnemies.forEach(function(enemy) {
+  //   enemy.stop();
+  // });
+  console.log('you won')
+  const reset = window.setTimeout(resetPlayer, 200);
 
-  const reset = window.setTimeout(resetGame, 2000);
 }
-
-function resetGame() {
+function resetPlayer() {
   player.reset();
-  allEnemies.forEach(function(enemy) {
-    enemy.setSpeed();
-  });
-}
+};
+
+
 
 // Enemies our player must avoid
 class Enemy {
