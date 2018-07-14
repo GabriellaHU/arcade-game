@@ -20,14 +20,12 @@ Enemy.prototype.update = function(dt) {
     // check enemy position
        //if enemy didn't pass border
          // move forward (increment x by speed * dt)
+         //else reset position to start
          if (this.x < 606) {
            this.x = this.x + 70 * dt;
          } else {
            this.x = -101;
          }
-
-
-       //else reset position to start
 
 };
 
@@ -36,12 +34,11 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Player class
+
 class Player {
 
-    constructor(x = 101*2, y = 83*5, sprite) {
+    constructor(x = 101*2, y = 400, sprite) {
       this.x = x;
       this.y = y;
       this.sprite = 'images/char-boy.png';
@@ -50,23 +47,33 @@ class Player {
     //Methods
     update() {
       //update position
-      // console.log(this.x, this.y);
         //check collision (player x and y matches enemy coordinates)
+        allEnemies.forEach(function(enemy){
+          if (player.y === enemy.y && player.x > enemy.x-50 && player.x < enemy.x+50) {
+            console.log('You lost');
+            player.reset();
+          }
+        });
+
         //check win condition (player y matches the right y coordinates )
+        if (this.y === 400 - 83*4) {
+          console.log('You won');
+          // window.setTimeout(player.reset, 1000);
+        }
     }
 
     handleInput(keyCode) {
       //update player coordinates based on keyboard input
-      if (keyCode === 'up'){
+      if (keyCode === 'up' && this.y > 400 - 83*4){
         this.y = this.y - 83;
       }
-      if (keyCode === 'right'){
+      if (keyCode === 'right' && this.x < 101*4){
         this.x = this.x + 101;
       }
-      if (keyCode === 'down'){
+      if (keyCode === 'down' && this.y < 400){
         this.y = this.y + 83;
       }
-      if (keyCode === 'left'){
+      if (keyCode === 'left' && this.x > 0){
         this.x = this.x - 101;
       }
     }
@@ -78,19 +85,12 @@ class Player {
 
     //Reset player
       // set x and y to the start coordinates
+    reset() {
+      this.x =101*2;
+      this.y = 400;
+    }
 
 }
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
-// new Player object
-
-// init allEnemies Array
-// create new Enemy objects and push them to the array
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -104,5 +104,8 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// TODO randomize enemy position
+
 let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101, 400 - 83 * 3), new Enemy(-101, 400 - 83 * 2)]
 let player = new Player()
