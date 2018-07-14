@@ -1,17 +1,3 @@
-// Enemies our player must avoid
-const Enemy = function(x, y, speed) {
-    // Variables applied to each of our instances go here,
-
-    this.x = x;
-    this.y = y;
-    //randomize enemy speed
-    this.speed = getRandomIntInclusive(150, 300);
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-};
-
 //funtion that generates a random value for enemy speed
 function getRandomIntInclusive(min, max) {
 min = Math.ceil(min);
@@ -19,12 +5,22 @@ max = Math.floor(max);
 return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+// Enemies our player must avoid
+class Enemy {
+
+  constructor(x, y, speed) {
+    this.x = x;
+    this.y = y;
+    //randomize enemy speed
+    this.speed = getRandomIntInclusive(150, 300);
+    // The image/sprite for our enemies, this uses
+    // a helper we've provided to easily load images
+    this.sprite = 'images/enemy-bug.png';
+  }
+
+  update(dt) {
+    // multiply movement by the dt parameter
+    // which will ensure the game runs at the same speed for all computers
 
     // check enemy position
        //if enemy didn't pass border
@@ -38,15 +34,15 @@ Enemy.prototype.update = function(dt) {
            this.speed = getRandomIntInclusive(150, 300);
          }
 
-};
+    }
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+    // Draw the enemy on the screen, required method for game
+   render() {
+     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+   }
+}
 
 // Player class
-
 class Player {
 
     constructor(x = 101*2, y = 400) {
