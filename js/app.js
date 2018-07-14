@@ -1,14 +1,23 @@
 // Enemies our player must avoid
-const Enemy = function(x, y) {
+const Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
 
     this.x = x;
     this.y = y;
+    //randomize enemy speed
+    this.speed = getRandomIntInclusive(150, 300);
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
+
+//funtion that generates a random value for enemy speed
+function getRandomIntInclusive(min, max) {
+min = Math.ceil(min);
+max = Math.floor(max);
+return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+}
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -22,9 +31,11 @@ Enemy.prototype.update = function(dt) {
          // move forward (increment x by speed * dt)
          //else reset position to start
          if (this.x < 606) {
-           this.x = this.x + 70 * dt;
+           this.x = this.x + this.speed * dt;
          } else {
            this.x = -101;
+           //overwrite enemy speed with a new random value
+           this.speed = getRandomIntInclusive(150, 300);
          }
 
 };
@@ -38,7 +49,7 @@ Enemy.prototype.render = function() {
 
 class Player {
 
-    constructor(x = 101*2, y = 400, sprite) {
+    constructor(x = 101*2, y = 400) {
       this.x = x;
       this.y = y;
       this.sprite = 'images/char-boy.png';
@@ -105,7 +116,5 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-// TODO randomize enemy position
-
-let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101, 400 - 83 * 3), new Enemy(-101, 400 - 83 * 2)]
+let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101*3, 400 - 83 * 3), new Enemy(-101*2, 400 - 83 * 2)]
 let player = new Player()
