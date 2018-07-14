@@ -1,8 +1,16 @@
-//funtion that generates a random value for enemy speed
-function getRandomIntInclusive(min, max) {
-min = Math.ceil(min);
-max = Math.floor(max);
-return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+function winGame() {
+  allEnemies.forEach(function(enemy) {
+    enemy.stop();
+  });
+
+  const reset = window.setTimeout(resetGame, 2000);
+}
+
+function resetGame() {
+  player.reset();
+  allEnemies.forEach(function(enemy) {
+    enemy.setSpeed();
+  });
 }
 
 // Enemies our player must avoid
@@ -12,10 +20,22 @@ class Enemy {
     this.x = x;
     this.y = y;
     //randomize enemy speed
-    this.speed = getRandomIntInclusive(150, 300);
+    this.speed = speed;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+  }
+
+  setSpeed() {
+    //randomize speed's value
+    this.speed = getRandomIntInclusive(150, 400);
+
+    //funtion that generates a random value
+    function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+    }
   }
 
   update(dt) {
@@ -23,23 +43,26 @@ class Enemy {
     // which will ensure the game runs at the same speed for all computers
 
     // check enemy position
-       //if enemy didn't pass border
-         // move forward (increment x by speed * dt)
-         //else reset position to start
+       //if enemy didn't pass border move forward (increment x by speed * dt)
+       //else reset position to start
          if (this.x < 606) {
            this.x = this.x + this.speed * dt;
          } else {
            this.x = -101;
            //overwrite enemy speed with a new random value
-           this.speed = getRandomIntInclusive(150, 300);
+           this.setSpeed();
          }
+   }
 
-    }
+   stop() {
+     this.speed = 0
+   }
 
-    // Draw the enemy on the screen, required method for game
+   // Draw the enemy on the screen, required method for game
    render() {
      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
    }
+
 }
 
 // Player class
@@ -56,17 +79,12 @@ class Player {
       //update position
         //check collision (player x and y matches enemy coordinates)
         allEnemies.forEach(function(enemy){
-          if (player.y === enemy.y && player.x > enemy.x-50 && player.x < enemy.x+50) {
+          if (player.y === enemy.y && player.x > enemy.x-20 && player.x < enemy.x+70) {
             console.log('You lost');
             player.reset();
           }
         });
 
-        //check win condition (player y matches the right y coordinates )
-        if (this.y === 400 - 83*4) {
-          console.log('You won');
-          // window.setTimeout(player.reset, 1000);
-        }
     }
 
     handleInput(keyCode) {
@@ -82,6 +100,11 @@ class Player {
       }
       if (keyCode === 'left' && this.x > 0){
         this.x = this.x - 101;
+      }
+
+      //check for victory condition
+      if (this.y === 400 - 83*4) {
+        winGame();
       }
     }
 
@@ -112,5 +135,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+//array that initializes enemies on the canvas
 let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101*3, 400 - 83 * 3), new Enemy(-101*2, 400 - 83 * 2)]
+// new player object
 let player = new Player()
