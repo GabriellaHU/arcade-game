@@ -180,7 +180,7 @@ class Player {
   handleInput(keyCode) {
     //update player coordinates based on keyboard input
     //the player can't leave the canvas
-    if (keyCode === 'up' && this.y > 400 - 83*4){
+    if (keyCode === 'up' && this.y > 400 - 83*5){
       this.y = this.y - 83;
     }
     if (keyCode === 'right' && this.x < 101*4){
@@ -194,7 +194,7 @@ class Player {
     }
 
     //check for victory condition
-    if (this.y === 400 - 83*4) {
+    if (this.y === 400 - 83*5) {
       winGame();
     }
   }
