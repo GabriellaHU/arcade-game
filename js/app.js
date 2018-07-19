@@ -231,7 +231,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
   };
 
-  //TODO an attempt to use the keyboard input for avatar selection in the game start modal :)
+  //TODO attempt to use the keyboard input for avatar selection in the game start modal :)
   // else {
   //   avatar.handleInput(allowedKeys[e.keyCode]);
   // };

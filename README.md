@@ -5,7 +5,7 @@ The rules of the game are simple. The player has to reach the water area, while 
 
 ## Getting Started
 
-You can simply click on [this link]((https://gabriellahu.github.io/arcade-game/) to play the game online.
+You can simply click on [this link](https://gabriellahu.github.io/arcade-game/) to play the game online.
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Option 1
@@ -21,11 +21,11 @@ The following instructions will get you a copy of the project up and running on 
 
 ## How to play:
 
-Click on *'Start Game'.*
+Click on *Start Game.*
 Your avatar is randomized each time you open or refresh the game.
 Use the keyboard arrow keys to navigate your avatar on the canvas.
-Avoid the bugs, they will send you back to the start point.
-Each time you reach the water, you gain one point.
+Avoid the bugs, otherwise you will end up back on the starting point.
+Each time you reach the water, you gain a point.
 
 ## Upcoming features
 
