@@ -37,19 +37,14 @@ const displayModal = function() {
 // ----------------------- WINNING THE GAME--------------------
 // ------------------------------------------------------------
 
-//TODO remove variable from global scope
+//TODO remove variables from global scope
 let scoreNum = 0;
 
 
 function winGame() {
 
   //reset player to startpoint
-  // TODO set delay => block player movement and collisions
-  const reset = window.setTimeout(resetPlayer, 0);
-
-  function resetPlayer() {
-    player.reset();
-  };
+  player.reset();
 
   // increase score counter
   scoreNum++;
@@ -102,8 +97,8 @@ class Enemy {
     // multiply movement by the dt parameter which will ensure the game runs at the same speed for all computers
 
     // check enemy position
-      //if enemy didn't pass border move forward (increment x by speed * dt)
-      //else reset position to start
+    //if enemy didn't pass border move forward (increment x by speed * dt)
+    //else reset position to start
     if (this.x < 606) {
       this.x = this.x + this.speed * dt;
     } else {
