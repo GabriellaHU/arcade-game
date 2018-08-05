@@ -2,8 +2,7 @@
 // -------------------- GAMESTART MODAL -----------------------
 // ------------------------------------------------------------
 
-// uses a <dialog> object which is experimental!
-//TODO: center the modal's y position on the canvas
+
 
 //IIFE that displays a modal when starting the game
 const displayModal = function() {
@@ -165,9 +164,9 @@ class Player {
     //check collision (player x and y matches enemy coordinates)
     // enemies have a physical width, therefore the collision has to happen in an optimal range on the x axis
     // the y coordinates are set to match exactly when the enemy and the player are on the same tile
-    allEnemies.forEach(function(enemy){
-      if (player.y === enemy.y && player.x > enemy.x-20 && player.x < enemy.x+70) {
-        player.reset();
+    allEnemies.forEach((enemy) => {
+      if (this.y === enemy.y && this.x > enemy.x-20 && this.x < enemy.x+70) {
+        this.reset();
       }
     });
   }
@@ -227,9 +226,7 @@ document.addEventListener('keyup', function(e) {
   };
 
   //TODO attempt to use the keyboard input for avatar selection in the game start modal :)
-  // else {
-  //   avatar.handleInput(allowedKeys[e.keyCode]);
-  // };
+
 });
 
 // ------------------------------------------------------------
@@ -237,7 +234,16 @@ document.addEventListener('keyup', function(e) {
 // ------------------------------------------------------------
 
 //array that initializes enemies on the canvas
-let allEnemies = [new Enemy(-101, 400 - 83 * 4), new Enemy(-101*3, 400 - 83 * 3), new Enemy(-101*2, 400 - 83 * 2)]
+let allEnemies = []
+
+initEnemies = function() {
+
+  for(let i=4; i>1; i--){
+    var enemy=new Enemy(-101, 400-83*i);
+    allEnemies.push(enemy)
+  }
+  
+}();
 
 // enemies don't move until the game has begun
 allEnemies.forEach(function(enemy) {
